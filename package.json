@@ -1,0 +1,42 @@
+{
+  "name": "campus-sentinel",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 0.0.0.0",
+    "build": "next build",
+    "start": "next start --hostname 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "db:seed": "tsx scripts/seed.ts",
+    "graph:sync": "tsx scripts/graph.ts",
+    "embeddings:backfill": "tsx scripts/backfill.ts",
+    "test:integration": "tsx --test tests/live.test.ts",
+    "check": "npm run typecheck && npm test",
+    "test:ui": "tsx tests/capture.ts",
+    "test:harness": "tsx tests/fixture-server.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "3.0.3",
+    "jose": "6.1.3",
+    "neo4j-driver": "6.0.1",
+    "next": "16.4.2",
+    "pg": "8.16.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.11",
+    "@electric-sql/pglite-pgvector": "^0.0.12",
+    "@electric-sql/pglite-socket": "^0.2.14",
+    "@playwright/test": "1.58.2",
+    "@types/node": "24.10.1",
+    "@types/pg": "8.16.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3"
+  }
+}

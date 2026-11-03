@@ -1,0 +1,17 @@
+node_modules/
+.next/
+.env
+.env.local
+*.tsbuildinfo
+coverage/
+playwright-report/
+test-results/
+
+# Private environment files; keep the safe template
+.env.*
+!.env.example
+
+# Local backups and Python caches
+*.bak
+__pycache__/
+.venv/
