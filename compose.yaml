@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?set in .env}
+      POSTGRES_USER: ${POSTGRES_USER:?set in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+    ports: ['127.0.0.1:5432:5432']
+    volumes: ['pg_data:/var/lib/postgresql/data']
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  neo4j:
+    image: neo4j:5.26-community
+    environment:
+      NEO4J_AUTH: ${NEO4J_USER:?set in .env}/${NEO4J_PASSWORD:?set in .env}
+    ports: ['127.0.0.1:7474:7474', '127.0.0.1:7687:7687']
+    volumes: ['neo4j_data:/data']
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'cypher-shell -u "$${NEO4J_AUTH%%/*}" -p "$${NEO4J_AUTH#*/}" ''RETURN 1'' >/dev/null 2>&1',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+  embeddings:
+    build: ./embedding-service
+    ports: ['127.0.0.1:8000:8000']
+    environment:
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
+    volumes: ['model_cache:/home/embed/.cache/huggingface']
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'python',
+          '-c',
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 120
+      start_period: 120s
+volumes:
+  pg_data:
+  neo4j_data:
+  model_cache:
