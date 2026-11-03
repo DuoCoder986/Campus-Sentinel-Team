@@ -1,0 +1,9 @@
+[
+  { "from": "SCI-ENTRY", "to": "SCI-LAB", "distance_m": 30, "is_accessible": true },
+  { "from": "SCI-LAB", "to": "SCI-F1", "distance_m": 45, "is_accessible": true },
+  { "from": "SCI-ENTRY", "to": "SCI-STAIR", "distance_m": 15, "is_accessible": false },
+  { "from": "SCI-STAIR", "to": "SCI-F1", "distance_m": 10, "is_accessible": false },
+  { "from": "SCI-ENTRY", "to": "LIB-ENTRY", "distance_m": 120, "is_accessible": true },
+  { "from": "LIB-ENTRY", "to": "LIB-LIFT", "distance_m": 20, "is_accessible": true },
+  { "from": "LIB-LIFT", "to": "LIB-READ", "distance_m": 25, "is_accessible": true }
+]
